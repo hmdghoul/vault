@@ -14,6 +14,7 @@ Applies when working inside an application repository, whatever the language. La
 - A new route carries the same authorization guard its siblings in that file carry, matched to its verb — a write guarded by the read permission is an open door. Check by counting: the guard annotations and the route mappings in a controller must come out equal.
 - Identity and scope come from the authenticated principal, never from a request field. A route that accepts a user id or a store id as a parameter lets any caller that can reach the service act as anyone.
 - A controller binds the request, calls one service method, and wraps the response. Every `if`, lookup, permission check and scope check belongs in the service, where it can be reused and tested.
+- Keep controllers lean: never add a validation call to a controller, not even a single line before the service call. Put it in the service method the controller calls.
 - Model a new distinction inside the one component that consumes it — do not push it into a shared type because that is where it "naturally" belongs.
 - Durable idempotency needs a persisted marker, not a cache that can evict.
 - Set a stored field from the event's full payload, not by adding a delta to what is already there — a redelivered event must not move the number.
